@@ -2,15 +2,27 @@ import React from 'react';
 import styled from 'styled-components';
 import './App.css';
 import Home from "./componentes/Home"
-import Carrinho from "./componentes/Carrinho/Carrinho"
+import Carrinho from "./componentes/Carrinho/Carrinho.jsx"
 import Filtro from "./componentes/Filtro"
+
+let Card = styled.div`
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  width: 200px;
+  height: 300px;
+  border: #282c34;
+  border-style: groove;
+  border-width: 1px;
+  margin-top: 20px;
+`
+
 
 class App extends React.Component {
   state = {
     cardRenderizado: [
       {
         id: Date.now,
-        nome: "camiseta 1",
+        nome: "camisa 1",
         preco: 10,
         imgUrl: "https://picsum.photos/200/200",
       },
@@ -39,32 +51,44 @@ class App extends React.Component {
         imgUrl: "https://picsum.photos/200/200",
       }
     ],
-  }
 
+    select:""
+  }
   
-    
- 
+  handlerSelect = (e) => {
+    this.setState({select: e.target.value})
+  }
+  
+  
   render(){
-    let Card = styled.div`
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    width: 200px;
-    height: 300px;
-    border: #282c34;
-    border-style: groove;
-    border-width: 1px;
-    margin-top: 20px;
-  `
   // montando os cards e depois jogando para a home via PROPS
     const lista = this.state.cardRenderizado
-    const nome = lista.map(i => <Card><img src={i.imgUrl} alt="foto camisa"/><div><p>{i.nome}</p><p>{i.preco}</p></div></Card>)
-  
-   
+    const nome = lista.map(i => <Card><img src={i.imgUrl} alt="foto camisa"/><div><p>{i.nome}</p><p>{i.preco}</p><button>carrinho</button></div></Card>)
+    let valueSelect = this.state.select
+    
+   if (this.state.select === 'crescente'){
+     const listaCrescente = [...lista] 
+      listaCrescente.sort((a,b) => {
+        let teste = a.preco - b.preco
+        this.setState({cardRenderizado: teste})
+      })
+   }else if(this.state.select === 'decrescente'){
+    const listaDescrescente = [...lista] 
+    listaDescrescente.sort((a,b) => {
+      let teste = b.preco - a.preco
+      this.setState({cardRenderizado: teste})
+    })
+   }
 
     return (
       <div className="App">
         <Filtro/>
-        <Home nome={nome} tamanhoLista={lista.length}/>
+        <Home
+        nome={nome}
+        tamanhoLista={lista.length}
+        valueSelect={valueSelect}
+        handlerSelect={this.handlerSelect}
+        />
         <Carrinho/>
       </div>
     );
