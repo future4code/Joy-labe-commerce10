@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 
+
 let ContainerFiltro = styled.div`
   display: flex;
   flex-direction: row;
@@ -23,9 +24,9 @@ class App extends React.Component {
           <span>Quantidade de produtos: {this.props.tamanhoLista}</span>
           <div>
             <span>Ordenação</span>
-            <select>
-              <option>Crescente</option>
-              <option>Decrescente</option>
+            <select value={this.props.valueSelect} onChange={this.props.handlerSelect}>
+              <option value={"crescente"}>Crescente</option>
+              <option value={"decrescente"}>Decrescente</option>
             </select>
           </div>
         </ContainerFiltro>
