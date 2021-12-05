@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import './App.css';
 import Home from "./componentes/Home"
-import Carrinho from "./componentes/Carrinho/Carrinho.jsx"
+import Carrinho from "./componentes/Carrinho/Carrinho"
 import Filtro from "./componentes/Filtro"
 
 let Card = styled.div`
